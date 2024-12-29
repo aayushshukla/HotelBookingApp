@@ -3,6 +3,7 @@ package org.infosys;
 import repository.HotelRepository;
 import repository.HotelRepositoryImpl;
 import services.BookingService;
+import services.RoomService;
 
 import java.util.List;
 import java.util.Scanner;
@@ -17,9 +18,9 @@ public class App
     {
 
         HotelRepository hotelRepository = new HotelRepositoryImpl();
-
+        RoomService roomService = new RoomService();
         // Create an instance of BookingService using the HotelRepository
-        BookingService bookingService = new BookingService(hotelRepository);
+        BookingService bookingService = new BookingService(hotelRepository,roomService);
 
         // Scanner to read user input
         Scanner scanner = new Scanner(System.in);

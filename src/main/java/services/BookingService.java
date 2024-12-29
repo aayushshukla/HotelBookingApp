@@ -8,9 +8,11 @@ import java.util.List;
 
 public class BookingService {
     private HotelRepository hotelRepository;
+    private RoomService roomService;
 
-    public BookingService(HotelRepository hotelRepository) {
+    public BookingService(HotelRepository hotelRepository,RoomService roomService) {
         this.hotelRepository = hotelRepository;
+        this.roomService=roomService;
     }
 
     public String bookHotel(long hotelId, String customerName) {
@@ -36,6 +38,11 @@ public class BookingService {
         Hotel hotel = hotelRepository.findHotelById(hotelId);
         if (hotel == null) {
             return "Hotel not found";
+        }
+
+        if(!roomService.checkAvailableRooms(hotel))
+        {
+            throw  new BookingException();
         }
 
         // Simulate canceling the booking and restoring the available room
