@@ -42,7 +42,8 @@ public class BookingService {
 
         if(!roomService.checkAvailableRooms(hotel))
         {
-            throw  new BookingException();
+            return "no rooms available";
+           // throw  new BookingException();
         }
 
         // Simulate canceling the booking and restoring the available room
