@@ -4,6 +4,7 @@ import repository.HotelRepository;
 import repository.HotelRepositoryImpl;
 import services.BookingService;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -29,7 +30,8 @@ public class App
         while (true) {
             System.out.println("\n1. Book a Hotel");
             System.out.println("2. Cancel a Booking");
-            System.out.println("3. Exit");
+            System.out.println("3. Hotel Names");
+            System.out.println("4. Exit");
             System.out.print("Please select an option: ");
 
             int option = scanner.nextInt();
@@ -63,12 +65,17 @@ public class App
                     String cancelResult = bookingService.cancelBooking(hotelId, customerName);
                     System.out.println(cancelResult);
                     break;
+                case 3 :
+                    List<String> hotelNames= hotelRepository.gethotelNames();
+                    System.out.println(hotelNames);
+                    break;
 
-                case 3:
+                case 4:
                     // Exit the application
                     System.out.println("Thank you for using the Hotel Booking App. Goodbye!");
                     scanner.close();
-                    return;
+                    break;
+
 
                 default:
                     System.out.println("Invalid option! Please try again.");

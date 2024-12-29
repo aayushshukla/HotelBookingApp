@@ -1,7 +1,10 @@
 package services;
 
+import appexceptions.BookingException;
 import models.Hotel;
 import repository.HotelRepository;
+
+import java.util.List;
 
 public class BookingService {
     private HotelRepository hotelRepository;
@@ -17,7 +20,8 @@ public class BookingService {
         }
 
         if (hotel.getAvailableRooms() <= 0) {
-            return "No available rooms";
+            //return "No available rooms";
+            throw  new BookingException();
         }
 
         // Simulate booking
@@ -39,5 +43,16 @@ public class BookingService {
         hotelRepository.updateHotel(hotel);
 
         return "Booking canceled for " + customerName;
+    }
+    public  int getAvailablePlaceCount()
+    {
+        int availableHotels = hotelRepository.totalNoOfHotelAvailable();
+        return availableHotels;
+    }
+
+    public List<String> getAllHotelNames()
+    {
+         List<String> hotelNameList = hotelRepository.gethotelNames();
+         return hotelNameList;
     }
 }

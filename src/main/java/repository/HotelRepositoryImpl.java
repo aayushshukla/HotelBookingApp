@@ -2,7 +2,9 @@ package repository;
 
 import models.Hotel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HotelRepositoryImpl implements HotelRepository {
@@ -29,5 +31,21 @@ public class HotelRepositoryImpl implements HotelRepository {
         }
         return false;
     }
+  @Override
+    public  int totalNoOfHotelAvailable()
+    {
+        return hotelDatabase.size();
+    }
+    @Override
+    public List<String> gethotelNames()
+    {
+       List<String> names=  new ArrayList<String>();
+       for(Hotel hotel : hotelDatabase.values()){
+           names.add(hotel.getName());
+       }
+       return  names;
+    }
+
+
 }
 
