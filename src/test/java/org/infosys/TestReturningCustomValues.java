@@ -1,27 +1,29 @@
 package org.infosys;
 
 
+import models.Hotel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import static org.mockito.Mockito.*;
-
 import org.junit.jupiter.api.Test;
-import repository.HotelRepository;
 import repository.HotelRepositoryImpl;
 import services.BookingService;
 import services.PaymentService;
 import services.RoomService;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 /**
  * Unit test for simple App.
  */
-public class AppTest
+public class TestReturningCustomValues
 {
   private PaymentService paymentServiceMock;
   private RoomService roomServiceMock;
   private HotelRepositoryImpl hotelRepositoryImplMock;
   private BookingService bookingService;
   private  HotelRepositoryImpl hotelImplementOrg;
+
 
   @BeforeEach
     void init()
@@ -33,29 +35,31 @@ public class AppTest
       this.bookingService = new BookingService(hotelRepositoryImplMock,
                roomServiceMock,
                paymentServiceMock);
+      this.hotelImplementOrg = new HotelRepositoryImpl();
 
     }
 
     @Test
-    void testingHotelBooking()
+  void testTotalHotelsAvailable()
     {
-     String actual =   bookingService.bookHotel(1,"Aayush");
-     System.out.println(actual);
-     String expecting ="Hotel not found";
-     Assertions.assertEquals(expecting,actual);
+      // return custom value from mock
+      when(this.hotelRepositoryImplMock.totalNoOfHotelAvailable()).thenReturn(3);
+      int expected=3;
+    int actual =hotelImplementOrg.totalNoOfHotelAvailable();
+    Assertions.assertEquals(expected,actual);
     }
 
-    @Test
-    void testTotalNumberOfHotel()
-    {
-      hotelImplementOrg= new HotelRepositoryImpl();
-        // mock object will return something to us
-      int noofhotel=     hotelRepositoryImplMock.totalNoOfHotelAvailable();
-      System.out.println(hotelImplementOrg.totalNoOfHotelAvailable());
-        System.out.println(noofhotel);
+  @Test
+  void testingRoomService()
+  {
+    RoomService roomService = new RoomService();
+    when(roomServiceMock.checkAvailableRooms(new Hotel(5,"abc",0))).thenReturn(true);
+    boolean expected=true;
+    boolean actual = roomService.checkAvailableRooms(new Hotel(4,"abc",1));
+    Assertions.assertEquals(expected,actual);
+  }
 
 
-    }
 
 
 }

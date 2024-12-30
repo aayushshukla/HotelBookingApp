@@ -8,7 +8,7 @@ public class RoomService {
 
    public boolean checkAvailableRooms(Hotel hotel)
    {
-       return hotel.getAvailableRooms() >= 0;
+       return hotel.getAvailableRooms() > 0;
    }
 
 }
