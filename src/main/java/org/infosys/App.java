@@ -3,6 +3,7 @@ package org.infosys;
 import repository.HotelRepository;
 import repository.HotelRepositoryImpl;
 import services.BookingService;
+import services.PaymentService;
 import services.RoomService;
 
 import java.util.List;
@@ -19,8 +20,9 @@ public class App
 
         HotelRepository hotelRepository = new HotelRepositoryImpl();
         RoomService roomService = new RoomService();
+        PaymentService paymentService = new PaymentService();
         // Create an instance of BookingService using the HotelRepository
-        BookingService bookingService = new BookingService(hotelRepository,roomService);
+        BookingService bookingService = new BookingService(hotelRepository,roomService,paymentService);
 
         // Scanner to read user input
         Scanner scanner = new Scanner(System.in);
@@ -32,7 +34,8 @@ public class App
             System.out.println("\n1. Book a Hotel");
             System.out.println("2. Cancel a Booking");
             System.out.println("3. Hotel Names");
-            System.out.println("4. Exit");
+            System.out.println("4. Check Payment Details");
+            System.out.println("5. Exit");
             System.out.print("Please select an option: ");
 
             int option = scanner.nextInt();
@@ -70,8 +73,20 @@ public class App
                     List<String> hotelNames= hotelRepository.gethotelNames();
                     System.out.println(hotelNames);
                     break;
-
                 case 4:
+                    System.out.println("Payment Details");
+                    int payment= bookingService.getPayment();
+                    if(payment==-1)
+                    {
+                        System.out.println("Only prepaid option available");
+                    }
+                    else
+                    {
+                        System.out.println("Total payment is :"+payment);
+                    }
+                    break;
+
+                case 5:
                     // Exit the application
                     System.out.println("Thank you for using the Hotel Booking App. Goodbye!");
                     scanner.close();

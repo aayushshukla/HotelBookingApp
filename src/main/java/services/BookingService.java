@@ -9,10 +9,13 @@ import java.util.List;
 public class BookingService {
     private HotelRepository hotelRepository;
     private RoomService roomService;
+    private  PaymentService paymentService;
 
-    public BookingService(HotelRepository hotelRepository,RoomService roomService) {
+    public BookingService(HotelRepository hotelRepository,RoomService roomService,
+                          PaymentService paymentService) {
         this.hotelRepository = hotelRepository;
         this.roomService=roomService;
+        this.paymentService=paymentService;
     }
 
     public String bookHotel(long hotelId, String customerName) {
@@ -63,4 +66,10 @@ public class BookingService {
          List<String> hotelNameList = hotelRepository.gethotelNames();
          return hotelNameList;
     }
+    public  int getPayment()
+    {
+       return   paymentService.payment();
+    }
+
+
 }
